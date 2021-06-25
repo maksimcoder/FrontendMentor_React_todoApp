@@ -1,0 +1,15 @@
+.close {
+    padding-right: 0;
+    padding-left: 0;
+    flex-basis: 10%;
+    cursor: pointer;
+    opacity: 0.3;
+}
+
+.close-enable:hover {
+    fill: orange;
+    opacity: 0.9;
+}
+.close-disabled {
+    cursor: default;
+}
