@@ -1,20 +1,33 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './checkbox.css';
 
 
+export default function TodoCheckbox({number, onMarkAsDone, disabled}) {
+    const visibility = disabled ? true : false;
+    const todoNumber = `new-${number}`;
 
-export default class TodoCheckbox extends Component {
-    render() {
-        return (
-            <div className="checkbox-wrapper">
-                <input type="checkbox" id="new-todo-checkbox"  name="inputs" className="custom-checkbox" disabled/>
-                <label htmlFor="new-todo-checkbox">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="11" height="9">
-                        <path fill="none" stroke="#FFF" strokeWidth="2" d="M1 4.304L3.696 7l6-6"/>
-                    </svg>
-                </label>
-            </div>
-        );
+    function onToggleDone() {
+        if (disabled) {
+            return;
+        }
+        onMarkAsDone(number); //props
     }
+
+
+    return (
+        <div className="checkbox-wrapper">
+            <input type="checkbox" id={todoNumber}  name="inputs" className="custom-checkbox" disabled={visibility}/>
+            <label htmlFor={todoNumber} onClick={onToggleDone}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="9">
+                    <path fill="none" stroke="#FFF" strokeWidth="2" d="M1 4.304L3.696 7l6-6"/>
+                </svg>
+            </label>
+        </div>
+    );
 }
+
+// TodoCheckbox.defaultProps = {
+//     isEnabled: false
+// }
+
 

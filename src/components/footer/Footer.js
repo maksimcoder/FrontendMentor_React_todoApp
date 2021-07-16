@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 
 
@@ -30,6 +30,7 @@ const FooterList = styled.ul`
 `;
 
 const FooterListItem = styled.li`
+    color: ${props => props.active ? 'orange' : "hsl(236, 9%, 61%)"};
     &:hover {
         color: orange;
     }
@@ -56,23 +57,60 @@ const FooterBtn = styled.button`
 
 
 
-export default class Footer extends Component {
-    render() {
-        return (
-            <FooterContainer>
-                <div>
-                    <ItemsLeftNum>3 Items left</ItemsLeftNum>
-                </div>
-                <FooterList>
-                    <FooterListItem>All</FooterListItem>
-                    <FooterListItem>Active</FooterListItem>
-                    <FooterListItem>Completed</FooterListItem>
-                </FooterList>
-                <div>
-                    <FooterBtn>Clear Completed</FooterBtn>
-                </div>
-            </FooterContainer>
-        );
+export default function Footer({todosAmount, handleChangeFilter, deleteAllDone}) {
+    const [filter, setFilter] = useState('all');
+
+    function onShowAllTodos() {
+        const text = 'all';
+        setFilter(text)
+        handleChangeFilter('all')
     }
+
+    function onShowDoneTodos() {
+        console.log(filter);
+        setFilter('done');
+        console.log(filter);
+        handleChangeFilter('done');
+    }
+
+    function onShowActiveTodos(e) {
+        console.log(e.target.textContent);
+    }
+
+    function onClickHandle(e) {
+        const text = (e.target.textContent.toLowerCase());
+        setFilter(text);
+        handleChangeFilter(text);
+    }
+    console.log(filter);
+    return (
+        <FooterContainer>
+            <div>
+                <ItemsLeftNum>{todosAmount} items left</ItemsLeftNum>
+            </div>
+            <FooterList>
+                <FooterListItem 
+                    active={filter === 'all' ? true : false}
+                    onClick={onClickHandle}
+                >All
+                </FooterListItem>
+                <FooterListItem
+                    active={filter === 'active' ? true : false}  
+                    onClick={onClickHandle}  
+                >Active
+                </FooterListItem>
+                <FooterListItem
+                    active={filter === 'completed' ? true : false}
+                    onClick={onClickHandle}
+                >Completed
+                </FooterListItem>
+            </FooterList>
+            <div>
+                <FooterBtn
+                    onClick={deleteAllDone}
+                >Clear Completed</FooterBtn>
+            </div>
+        </FooterContainer>
+    );
 }
 
